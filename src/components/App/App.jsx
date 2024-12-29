@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Movie } from "../Movies";
 import { Navbar } from "../Nav";
 import { Watched } from "../Watched";
 import { getMovies } from "./api";
-import { debounce } from "lodash";
+import { debounce, values } from "lodash";
 
 
 const tempMovieData = [
@@ -55,35 +55,39 @@ const tempWatchedData = [
 
 function App() {
   const [numResults, setNumResults] = useState(0);
+  const[isLoading, setIsLoading] = useState(false);
+  // ссылка - данные не обнуляються при перерендере
+  const abortController = useRef(null);
 
-  // отложенный запрос
-  const debounceRequest = debounce(async (value) => {
-      const data = await getMovies(value);
-      return data;
-    }, 2000
-  );
-
+  // аборт контроллер
   async function searchHandler(value) {
-    const data = await debounceRequest(value);
-    console.log(data);
-
-    if (data) {
-      setNumResults(data.totalResults);
+;
+    if (abortController.current) {
+      abortController.current.abort();
     }
+
+    const controller = new AbortController();
+    // перезаписываем useRef(null);
+    abortController.current = controller;
+
+    const data = await getMovies(value, controller, setIsLoading);
+    setNumResults(data?.totalResults || 0);
   }
 
   // при уничтожении компонента - очищай память
   useEffect(() => {
     return () => {
-      debounceRequest.cancel();
+      if (abortController.current) {
+        abortController.current.abort();
+      }
     };
-  }, [debounceRequest])
+  }, [])
 
   return (
     <>
       <Navbar onSearch={searchHandler} numResults={numResults}/>
       <main className="main">
-        <Movie />
+        <Movie isLoading={isLoading}/>
         <Watched />
       </main>
     </>
@@ -91,3 +95,34 @@ function App() {
 }
 
 export default App;
+
+
+/*                      debounce
+
+const searchHandler = debounce(async(value) => {
+  const data = await getMovies(value);
+  // console.log(data);
+  // setNumResults((prev) prev - это то что лежит в useState(0); т.е. 0
+  setNumResults(data?.totalResults || 0);
+}, 2000);
+
+// при уничтожении компонента - очищай память
+useEffect(() => {
+  return () => {
+    searchHandler.cancel();
+  };
+}, [searchHandler])
+
+return (
+  <>
+    <Navbar onSearch={searchHandler} numResults={numResults}/>
+    <main className="main">
+      <Movie />
+      <Watched />
+    </main>
+  </>
+);
+}
+
+export default App;
+*/

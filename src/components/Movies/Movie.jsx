@@ -3,14 +3,16 @@ import { Box } from "../Box";
 import { Error } from "../Error";
 import { List } from "../List";
 import { MovieItem } from "./MovieItem";
+import Spinner from "../Spinner/Spinner";
 
-export function Movie() {
+export function Movie({ isLoading }) {
     return (
         <Box>
-        <Error />
-        <List className="list-movies">
-            <MovieItem />
-        </List>
+            <Error />
+            {isLoading && <Spinner />}
+            <List className="list-movies">
+                <MovieItem />
+            </List>
         </Box>
     );
 }
