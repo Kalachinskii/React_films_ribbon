@@ -58,6 +58,7 @@ function App() {
   const[isLoading, setIsLoading] = useState(false);
   // ссылка - данные не обнуляються при перерендере
   const abortController = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   // аборт контроллер
   async function searchHandler(value) {
@@ -70,7 +71,7 @@ function App() {
     // перезаписываем useRef(null);
     abortController.current = controller;
 
-    const data = await getMovies(value, controller, setIsLoading);
+    const data = await getMovies(value, controller, setIsLoading, setIsError);
     setNumResults(data?.totalResults || 0);
   }
 
@@ -87,7 +88,7 @@ function App() {
     <>
       <Navbar onSearch={searchHandler} numResults={numResults}/>
       <main className="main">
-        <Movie isLoading={isLoading}/>
+        <Movie isLoading={isLoading} isError={isError}/>
         <Watched />
       </main>
     </>

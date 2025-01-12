@@ -1,15 +1,19 @@
 import React from "react";
-import { Box } from "../Box";
-import { Error } from "../Error";
-import { List } from "../List";
+import { Box } from "../Box/Box";
+import { Error } from "../Error/Error";
+import { List } from "../List/List";
 import { MovieItem } from "./MovieItem";
 import Spinner from "../Spinner/Spinner";
 
-export function Movie({ isLoading }) {
+export function Movie({ isLoading, isError }) {
     return (
         <Box>
-            <Error />
-            {isLoading && <Spinner />}
+            {isError && <Error />}
+            {isLoading && (
+                    <div className="spinner-wrapper">
+                        <Spinner />
+                    </div>
+                )}
             <List className="list-movies">
                 <MovieItem />
             </List>
