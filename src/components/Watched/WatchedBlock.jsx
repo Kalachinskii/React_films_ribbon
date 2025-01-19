@@ -4,7 +4,7 @@ import { WatchedItem } from "./WatchedItem";
 import { Summary } from "./Summary";
 import { List } from "../List/List";
 
-export function Watched() {
+export function WatchedBlock() {
     return (
         <Box>
         <Details />

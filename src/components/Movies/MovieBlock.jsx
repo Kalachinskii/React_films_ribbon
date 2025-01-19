@@ -5,7 +5,7 @@ import { List } from "../List/List";
 import { MovieItem } from "./MovieItem";
 import Spinner from "../Spinner/Spinner";
 
-export function Movie({ isLoading, isError, movies }) {
+export function MovieBlock({ isLoading, isError, movies }) {
     // console.log("______________________");
     // console.log("isLoading", isLoading);
     // console.log("isError", isError);
@@ -20,9 +20,7 @@ export function Movie({ isLoading, isError, movies }) {
                 )}
             <List className="list-movies">
                 {
-                    // проходимся по массиву фильмов
-                    // кажыдй фильм прокидываем в MovieItem
-                    // незабываем ключи
+                    // проходимся по массиву фильмов и прокидываем на отрисовку
                     movies && movies.map((item, ind) => <MovieItem key={ind} movie={item}/>)
                 }
                 
