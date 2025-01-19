@@ -7,9 +7,6 @@ import Spinner from "../Spinner/Spinner";
 
 export function MovieBlock({ isLoading, isError, movies }) {
     const [activeMovie, setActiveMovie] = useState();
-    const movieClickHandler = (id) => {
-        setActiveMovie(id);
-    }
     
     return (
         <Box>
@@ -24,10 +21,10 @@ export function MovieBlock({ isLoading, isError, movies }) {
                     // проходимся по массиву фильмов и прокидываем на отрисовку
                     movies && movies.map((item, ind) => 
                     <MovieItem 
-                        key={ind} 
+                        key={item.imdbID} 
                         movie={item} 
                         isActive={activeMovie === item.imdbID ? true : false} 
-                        movieClickHandler={movieClickHandler}
+                        setActiveMovie={setActiveMovie}
                     />)
                 }
                 
