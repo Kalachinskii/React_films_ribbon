@@ -4,14 +4,14 @@ import { WatchedItem } from "./WatchedItem";
 import { Summary } from "./Summary";
 import { List } from "../List/List";
 
-export function WatchedBlock() {
+export function WatchedBlock({id}) {
     return (
         <Box>
-        <Details />
-        <Summary />
-        <List>
-            <WatchedItem />
-        </List>
+            {id && <Details id={id}/>}
+            <Summary />
+            <List>
+                <WatchedItem />
+            </List>
         </Box>
     );
 }

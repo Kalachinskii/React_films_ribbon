@@ -60,6 +60,7 @@ function App() {
   const abortController = useRef(null);
   const [isError, setIsError] = useState(false);
   const [movies, setIsMovies] = useState([]);
+  const [activeMovie, setActiveMovie] = useState();
 
   // аборт контроллер
   async function searchHandler(value) {
@@ -102,8 +103,8 @@ function App() {
     <>
       <Navbar onSearch={searchHandler} numResults={numResults}/>
       <main className="main">
-        <MovieBlock isLoading={isLoading} isError={isError} movies={movies}/>
-        <WatchedBlock />
+        <MovieBlock isLoading={isLoading} isError={isError} movies={movies} activeMovie={activeMovie} setActiveMovie={setActiveMovie}/>
+        <WatchedBlock id={activeMovie}/>
       </main>
     </>
   );

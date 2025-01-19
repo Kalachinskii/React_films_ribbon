@@ -22,6 +22,25 @@ export async function getMovies(query, controller) {
     }
 }
 
+export async function getMoviesDescription(id) {
+    try {
+        const resp = await fetch(
+            `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`
+        );
+
+        if (!resp.ok) throw new Error("Request error");
+        const data = await resp.json();
+        if (data.Response === "False") {
+            throw new Error("Response error - ненайден этот фильм");
+        }
+        return data;
+    } catch (error) {
+        if (error.name === "AbortError") {
+            console.log("предыдущий запрос отменен");
+        }
+    }
+}
+
 /*                          debounce
 export async function getMovies(query) {
     try {

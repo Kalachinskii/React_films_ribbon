@@ -1,6 +1,9 @@
 import React from "react";
+import { getMoviesDescription } from "../App/api";
 
-export function Details() {
+export function Details({id}) {
+    getMoviesDescription(id);
+    
     return (
         <div className="details">
         <header>
