@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { MovieBlock } from "../Movies";
-import { Navbar } from "../Nav";
-import { WatchedBlock } from "../Watched";
-import { getMovies } from "./api";
+import { MovieBlock } from "../../Movies";
+import { Navbar } from "../../Nav";
+import { WatchedBlock } from "../../Watched";
+import { getMovies } from "../api";
 import { debounce, values } from "lodash";
 
 

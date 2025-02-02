@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getMoviesDescription } from "../App/api";
-import Spinner from "../Spinner/Spinner";
-import StarRaiting from "../StarRating/StarRaiting";
+import { getMoviesDescription } from "../../App/api";
+import Spinner from "../../Spinner/ui/Spinner";
+import StarRaiting from "../../StarRating/ui/StarRaiting";
 
 export function Details({id}) {
     const [description, setDescription] = useState(null);
