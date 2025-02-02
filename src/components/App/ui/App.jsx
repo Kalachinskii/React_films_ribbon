@@ -53,7 +53,7 @@ const tempWatchedData = [
   },
 ];
 
-function App() {
+export function App() {
   const [numResults, setNumResults] = useState(0);
   const[isLoading, setIsLoading] = useState(false);
   // ссылка - данные не обнуляються при перерендере
@@ -110,7 +110,7 @@ function App() {
   );
 }
 
-export default App;
+// export default App;
 
 
 /*                      debounce
