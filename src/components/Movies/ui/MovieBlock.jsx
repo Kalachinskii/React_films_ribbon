@@ -5,12 +5,12 @@ import { List } from "../../List/ui/List";
 import { MovieItem } from "./MovieItem";
 import Spinner from "../../Spinner/ui/Spinner";
 
-export function MovieBlock({ isLoading, isError, movies, setActiveMovie, activeMovie }) {
+export function MovieBlock({ isLoading, error, movies, setActiveMovie, activeMovie }) {
 
     
     return (
         <Box>
-            {isError && <Error />}
+            {error && <Error msg={error}/>}
             {isLoading && (
                     <div className="spinner-wrapper">
                         <Spinner />

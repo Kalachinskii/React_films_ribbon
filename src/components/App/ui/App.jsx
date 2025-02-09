@@ -8,7 +8,7 @@ export function App() {
   const {searchHandler,
     numResults,
     isLoading,
-    isError,
+    error,
     movies,
     activeMovie,
     setActiveMovie} = useGetMovies();
@@ -17,7 +17,7 @@ export function App() {
     <>
       <Navbar onSearch={searchHandler} numResults={numResults}/>
       <main className="main">
-        <MovieBlock isLoading={isLoading} isError={isError} movies={movies} activeMovie={activeMovie} setActiveMovie={setActiveMovie}/>
+        <MovieBlock isLoading={isLoading} error={error} movies={movies} activeMovie={activeMovie} setActiveMovie={setActiveMovie}/>
         <WatchedBlock id={activeMovie}/>
       </main>
     </>

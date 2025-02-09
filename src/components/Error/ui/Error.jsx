@@ -1,9 +1,7 @@
-// import React from 'react'
-
-export const Error = () => {
+export const Error = ({msg}) => {
     return (
         <p className="error">
-            <span>⛔️</span> Movie not found
+            <span>⛔️</span> {msg}
         </p>
     );
 }

@@ -6,7 +6,7 @@ export function useGetMovies() {
     const [isLoading, setIsLoading] = useState(false);
     // ссылка - данные не обнуляються при перерендере
     const abortController = useRef(null);
-    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState();
     const [movies, setIsMovies] = useState([]);
     const [activeMovie, setActiveMovie] = useState();
 
@@ -14,7 +14,7 @@ export function useGetMovies() {
     async function searchHandler(value) {
         // убераеем error при пустой строке поиска
         if (!value) {
-            setIsError(false);
+            setError();
             setNumResults(0);
             return;
         }
@@ -29,13 +29,25 @@ export function useGetMovies() {
         abortController.current = controller;
         // установим состояние на Loading и error при 0 фильмов
         setIsLoading(true);
-        setIsError(false);
-        const data = await getMovies(value, controller);
-        // убераем loading при получении данных
+        setError();
+        try {
+            const data = await getMovies(value, controller);
+            if (data.Response === "False") {
+                throw new Error("Response error - ненайден фильм");
+            }
+            // убераем loading при получении данных
+            setIsLoading(false);
+            // !data ? setIsError(true) : setIsError(false);
+            setIsMovies(data.Search);
+            setNumResults(data?.totalResults || 0);
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                console.log(error);
+                setError(error.message);
+                setIsMovies([]);
+            }
+        }
         setIsLoading(false);
-        !data ? setIsError(true) : setIsError(false);
-        data?.Search ? setIsMovies(data.Search) : setIsMovies([]);
-        setNumResults(data?.totalResults || 0);
     }
 
     // при уничтожении компонента - очищай память
@@ -51,7 +63,7 @@ export function useGetMovies() {
         searchHandler,
         numResults,
         isLoading,
-        isError,
+        error,
         movies,
         activeMovie,
         setActiveMovie,

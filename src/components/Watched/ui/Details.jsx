@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { getMoviesDescription } from "../../App/api";
-import Spinner from "../../Spinner/ui/Spinner";
 import StarRaiting from "../../StarRating/ui/StarRaiting";
+import { useGetMovieDescription } from "../model/useGetMovieDescription";
+import Spinner from "../../Spinner/ui/Spinner";
+import {Error} from "../../Error";
 
 export function Details({id}) {
-    const [description, setDescription] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const {description, isLoading, errorMsg} = useGetMovieDescription(id);
 
-    // useEffect(() => {}, зависимости)
-    // когда зависим от пропса то ложи в UseEffect
-    // [] - запуск 1 раз при рендере компонента
-    // [id] - каждыйраз когда придёт id запускает
-    // [id, переменныеState]
-    useEffect(() => {
-        setIsLoading(true)
-        getMoviesDescription(id).then((data)=>{
-            console.log(description);
-            setDescription(data)
-            setIsLoading(false);
-        });
-
-        //                    async/await
-        // async function getDescription() {
-        //     const data = await getMoviesDescription(id);
-        //     setDescription(data)
-        //         console.log(description);
-        //         setIsLoading(false);
-        // }
-        // getDescription()
-    },[id]);
+    if (isLoading)
+        return (
+            <div className="spinner-wrapper">
+                <Spinner />
+            </div>
+        );
     
-    if (isLoading) return (
-        <div className="spinner-wrapper">
-            <Spinner />
-        </div>
-    );
+    if (errorMsg) {
+        return <Error msg={errorMsg}/>
+    }
 
     return (
         <div className="details">
@@ -51,8 +32,6 @@ export function Details({id}) {
             </p>
             </div>
         </header>
-
-        {/* <p>{avgRating}</p> */}
 
         <section>
             <div className="rating">
