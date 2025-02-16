@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Star from './Star'
 
 const StarRaiting = () => {
+    const [tempRating, setTempRating] = useState(0);
+    const [rating, setRating] = useState(0);
+
     return (
             <div
             style={{
@@ -19,7 +22,14 @@ const StarRaiting = () => {
                     создай массив из 10 объектов
                     _ - не пользуемся
                 */}
-                {Array.from({length:10},(_,ind)=><Star key={ind}/>)}
+                {Array.from({length:10},(_,ind)=>
+                    <Star 
+                        onMark={setRating} 
+                        key={ind} 
+                        fill={(ind < tempRating) || ind < rating ? "gold" : "transparent"} 
+                        ind={ind} 
+                        onHover={setTempRating}/>
+                )}
             
             </div>
             {/* жизненые цыклы напомнить*/}
@@ -30,7 +40,7 @@ const StarRaiting = () => {
                 color: "white",
             }}
             >
-            10/10
+            {tempRating || rating}/10
             </span>
         </div>
     )
