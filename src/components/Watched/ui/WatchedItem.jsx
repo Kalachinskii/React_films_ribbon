@@ -1,27 +1,24 @@
 import React from "react";
 
-export function WatchedItem() {
+export function WatchedItem({ imdbRating, poster, rating, runtime, title }) {
     return (
         <li>
-        <img
-            src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
-            alt={`movie.Title poster`}
-        />
-        <h3>movie.Title</h3>
-        <div>
-            <p>
-            <span>⭐️</span>
-            <span>6</span>
-            </p>
-            <p>
-            <span>🌟</span>
-            <span>8</span>
-            </p>
-            <p>
-            <span>⏳</span>
-            <span>34 min</span>
-            </p>
-        </div>
+            <img src={poster} alt={title} />
+            <h3>{title}</h3>
+            <div>
+                <p>
+                    <span>⭐️</span>
+                    <span>{rating}</span>
+                </p>
+                <p>
+                    <span>🌟</span>
+                    <span>{imdbRating}</span>
+                </p>
+                <p>
+                    <span>⏳</span>
+                    <span>{runtime}</span>
+                </p>
+            </div>
         </li>
     );
 }

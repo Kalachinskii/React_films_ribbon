@@ -3,19 +3,30 @@ import { Details } from "./Details";
 import { WatchedItem } from "./WatchedItem";
 import { Summary } from "./Summary";
 import { List } from "../../List/ui/List";
-import Spinner from "../../Spinner/ui/Spinner";
 import { useState } from "react";
 
 export function WatchedBlock({ id, onSetActiveMovie }) {
+    const [ratedMovies, setRatedMovies] = useState([]);
+    console.log(ratedMovies);
+
     return (
         <Box>
-            {id && <Details id={id} onReset={onSetActiveMovie} />}
+            {id && (
+                <Details
+                    id={id}
+                    onReset={onSetActiveMovie}
+                    ratedMovies={ratedMovies}
+                    setRatedMovies={setRatedMovies}
+                />
+            )}
 
             {!id && (
                 <>
-                    <Summary />
+                    <Summary movies={ratedMovies} />
                     <List>
-                        <WatchedItem />
+                        {ratedMovies?.map((movie) => (
+                            <WatchedItem key={movie.id} {...movie} />
+                        ))}
                     </List>
                 </>
             )}

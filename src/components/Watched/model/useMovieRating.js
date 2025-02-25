@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-export function useMovieRating(id) {
+export function useMovieRating(id, ratedMovies) {
     const [rating, setRating] = useState(0);
-    const [ratedMovies, setRatedMovies] = useState([]);
     const movieIndex = ratedMovies?.findIndex((movie) => movie.id === id);
 
     useEffect(() => {
@@ -11,9 +10,7 @@ export function useMovieRating(id) {
 
     return {
         rating,
-        ratedMovies,
         movieIndex,
-        setRatedMovies,
         setRating,
     };
 }

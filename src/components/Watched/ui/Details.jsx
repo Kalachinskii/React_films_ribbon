@@ -3,12 +3,10 @@ import Spinner from "../../Spinner/ui/Spinner";
 import { Error } from "../../Error";
 import StarRaiting from "./StarRating/StarRaiting";
 import { useMovieRating } from "../model/useMovieRating";
-import { useState } from "react";
 
-export function Details({ id, onReset }) {
+export function Details({ id, onReset, setRatedMovies, ratedMovies }) {
     const { description, isLoading, errorMsg } = useGetMovieDescription(id);
-    const { rating, ratedMovies, movieIndex, setRating, setRatedMovies } =
-        useMovieRating(id);
+    const { rating, movieIndex, setRating } = useMovieRating(id, ratedMovies);
 
     if (isLoading)
         return (
@@ -53,7 +51,14 @@ export function Details({ id, onReset }) {
                                 // setAdded(true);
                                 setRatedMovies((oldMovies) => [
                                     ...oldMovies,
-                                    { id, rating },
+                                    {
+                                        id,
+                                        rating,
+                                        title: description.Title,
+                                        poster: description.Poster,
+                                        runtime: description.Runtime,
+                                        imdbRating: description.imdbRating,
+                                    },
                                 ]);
                             }}
                             className="btn-add"
