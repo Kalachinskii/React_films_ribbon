@@ -1,10 +1,20 @@
-import StarRaiting from "../../StarRating/ui/StarRaiting";
+// import StarRaiting from "../../StarRating/ui/StarRaiting";
 import { useGetMovieDescription } from "../model/useGetMovieDescription";
 import Spinner from "../../Spinner/ui/Spinner";
 import {Error} from "../../Error";
+import StarRaiting from "./StarRating/StarRaiting";
+import { useEffect, useState } from "react";
 
 export function Details({id}) {
+    const [rating, setRating] = useState(0);
+    const [ratedMovies, setRatedMovies] = useState([]);
+
     const {description, isLoading, errorMsg} = useGetMovieDescription(id);
+    const movieIndex = ratedMovies?.findIndex((movie) => movie.id === id);
+
+    useEffect(() => {
+        setRating(0)
+    }, [id])
 
     if (isLoading)
         return (
@@ -35,12 +45,28 @@ export function Details({id}) {
 
         <section>
             <div className="rating">
-            <StarRaiting />
+            {movieIndex === -1 && (
+                <StarRaiting rating={rating} setRating={setRating}/>
+            )}
 
-            <button className="btn-add">+ Add to list</button>
-            <p>
-                You rated with movie 7 <span>⭐️</span>
-            </p>
+            {!!rating && movieIndex === -1 && (
+                <button 
+                    onClick={() => {
+                        // setAdded(true);
+                        setRatedMovies((oldMovies) => [...oldMovies, {id, rating}]);
+                    }} 
+                    className="btn-add">
+                    + Add to list
+                </button>
+            )}
+            { movieIndex !== -1 && (
+                <p>
+                    You rated with movie 7
+                    {ratedMovies[movieIndex]?.rating}
+                    <span>⭐️</span>
+                </p>
+            )}
+
             </div>
             <div className="details-overview">
             <p>

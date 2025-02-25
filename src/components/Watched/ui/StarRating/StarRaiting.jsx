@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import Star from './Star'
 
-const StarRaiting = () => {
+const StarRaiting = ({rating, setRating}) => {
     const [tempRating, setTempRating] = useState(0);
-    const [rating, setRating] = useState(0);
-
+    
     return (
             <div
             style={{
