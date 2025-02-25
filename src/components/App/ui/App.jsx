@@ -5,23 +5,34 @@ import { useGetMovies } from "../model/useGetMovies";
 // import { debounce, values } from "lodash";
 
 export function App() {
-  const {searchHandler,
-    numResults,
-    isLoading,
-    error,
-    movies,
-    activeMovie,
-    setActiveMovie} = useGetMovies();
+    const {
+        searchHandler,
+        numResults,
+        isLoading,
+        error,
+        movies,
+        activeMovie,
+        setActiveMovie,
+    } = useGetMovies();
 
-  return (
-    <>
-      <Navbar onSearch={searchHandler} numResults={numResults}/>
-      <main className="main">
-        <MovieBlock isLoading={isLoading} error={error} movies={movies} activeMovie={activeMovie} setActiveMovie={setActiveMovie}/>
-        <WatchedBlock id={activeMovie}/>
-      </main>
-    </>
-  );
+    return (
+        <>
+            <Navbar onSearch={searchHandler} numResults={numResults} />
+            <main className="main">
+                <MovieBlock
+                    isLoading={isLoading}
+                    error={error}
+                    movies={movies}
+                    activeMovie={activeMovie}
+                    setActiveMovie={setActiveMovie}
+                />
+                <WatchedBlock
+                    id={activeMovie}
+                    onSetActiveMovie={setActiveMovie}
+                />
+            </main>
+        </>
+    );
 }
 
 /*                      debounce
