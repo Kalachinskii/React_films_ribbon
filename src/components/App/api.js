@@ -1,8 +1,6 @@
 export async function getMovies(query, controller) {
     const resp = await fetch(
-        `https://www.omdbapi.com/?apikey=${
-            import.meta.env.VITE_API_KEY
-        }&s=${query}`,
+        `/api?apikey=${import.meta.env.VITE_API_KEY}&s=${query}`,
         {
             signal: controller.signal,
         }
